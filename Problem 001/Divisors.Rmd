@@ -1,7 +1,6 @@
 ---
-title: "Euler - Multiples of 3 or 5"
+title: "Euler Problem 1 - Multiples of 3 or 5"
 author: "Eric Askelson"
-date: "2022-07-26"
 output: html_document
 ---
 
@@ -9,14 +8,14 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Euler Problem 1 - Multiples of 3 or 5
-
-[Problem statement](https://projecteuler.net/problem=1)
+## [Problem statement](https://projecteuler.net/problem=1)
 
 > If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
 >
 > Find the sum of all the multiples of 3 or 5 below 1000.
 
+
+## Solution
 Pretty easy in R!
 
 ```{r}
