@@ -1,7 +1,9 @@
 ---
 title: "Names Scores"
 subtitle: "[Euler Problem 22](https://projecteuler.net/problem=22)"
-output: html_document
+output: 
+  html_document: 
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
