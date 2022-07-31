@@ -1,0 +1,100 @@
+---
+title: "Names Scores"
+subtitle: "[Euler Problem 22](https://projecteuler.net/problem=22)"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Problem
+
+> Using names.txt, a 46K text file containing over five-thousand first names, begin by sorting it into alphabetical order. Then working out the alphabetical value for each name, multiply this value by its alphabetical position in the list to obtain a name score.
+>
+> For example, when the list is sorted into alphabetical order, COLIN, which is worth 3 + 15 + 12 + 9 + 14 = 53, is the 938th name in the list. So, COLIN would obtain a score of 938 × 53 = 49714.
+>
+> What is the total of all the name scores in the file?
+
+## Solution {.tabset}
+
+Seems like a problem R is uniquely suited to solve! Let's just naively do as the problem asks and see how it goes.
+
+### Read/Clean Data
+
+```{r}
+# Read in supplied names list
+filename <- "p022_names.txt"
+names <- readLines(filename, warn = FALSE)
+substr(names,1,50)
+
+# Single line format is a bit awkward, and we've got some quotation junk to strip. Let's strip that first
+names <- gsub("\"", "", names)
+substr(names,1,50)
+
+# Quotes stripped, now we need a vector
+names <- unlist(strsplit(names,","))
+head(names)
+
+# Sort names alphabetically
+names <- sort(names)
+head(names)
+```
+
+### Add Name function
+```{r}
+# Create name value function
+nameVal <- function(nam)
+{
+    sum(as.numeric(charToRaw(toupper(nam)))
+        - as.numeric(charToRaw("A"))
+        + 1)
+}
+```
+
+### Test Name function
+
+```{r}
+# Test the new function - A should be 1:
+nameVal("A")
+
+# AA should be two:
+nameVal("AA")
+
+# B should be two:
+nameVal("B")
+
+# a should be 1:
+nameVal("a")
+
+# COLIN should be 53:
+nameVal("COLIN")
+
+```
+
+### Final Result 
+All right, we have our cleaned sorted data and a function to calculate their "Name Value". Let's see what the sum is.
+
+```{r}
+# Get the "name values" for each name
+nameVals <- sapply(names, nameVal)
+head(nameVals)
+
+# The named numbers are interesting, but we no longer need the names, so strip them
+nameVals <- unname(nameVals)
+head(nameVals)
+
+# Finally, calculate the result
+sum(nameVals * 1:length(nameVals))
+
+```
+
+And that's correct! 
+
+## Conclusions
+R was perhaps not quite as good for this task as I would have thought - Python would have made much shorter work of converting the individual strings into character value sums. Still, difficulties in coding this aside, the solution was still quite to run.
+
+ - The sapply function will be quite useful
+ - I need to figure out what the purpose of Named nums is
+ - Make sure to use "gsub" instead of "sub" for text substitution - how often do you want a single replacement?
+ 
+ 
